@@ -291,6 +291,20 @@ for(index in unique(damData$dlc_id)){
   
 }
 P<-P+ theme_void()+
-  theme(plot.background = element_rect(fill="#56637A", colour=NA),legend.position = "none")+
+  theme(plot.background = element_rect(fill="#56637A", colour=NA),
+        legend.position = "none")+
   coord_polar()
+ggsave("Circle_of_life_lemur.jpeg",plot = P,device = "jpeg")
+P
+P<-P+
+  geom_line(data = data.frame(weight_g = 0:7000, age_at_wt_d=0),aes(y = weight_g, x = age_at_wt_d), color = "#444E5F", alpha = 1)+
+  geom_line(data = data.frame(weight_g = 7000, age_at_wt_d=0:2000),aes(y = weight_g, x = age_at_wt_d), color = "#444E5F", alpha = 1,
+            arrow = arrow(length=unit(0.30,"cm"), ends="last", type = "closed"))+
+  labs(
+    caption = "Directions to read plot: Each lemur's age increases in the clockwise direction with the start of life being 12 o'clock. 
+    The lemur's weight is mapped inward or outward in radius from the midpoint depending on their species. 
+    Each species has their own color. Each data point is smoothed with a the rolling average of 3 weighings.
+    "
+  )
+ggsave("Circle_of_life_lemur_labeled.jpeg",plot = P,device = "jpeg")
 P
